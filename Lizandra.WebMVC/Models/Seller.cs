@@ -18,7 +18,7 @@ namespace Lizandra.WebMVC.Models
             
         }
 
-        public Seller(int id, string name, decimal baseSalary, string email, DateTime birthDate, Department department)
+        public Seller(int id, string name,  string email, DateTime birthDate,decimal baseSalary, Department department)
         {
             Id = id;
             Name = name;
