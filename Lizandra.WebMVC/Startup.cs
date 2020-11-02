@@ -1,11 +1,15 @@
+using System.Collections.Generic;
 using Lizandra.WebMVC.Data;
+using System.Globalization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Lizandra.WebMVC.Services;
+
 
 namespace Lizandra.WebMVC
 {
@@ -34,6 +38,16 @@ namespace Lizandra.WebMVC
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SeedingService seedingService)
         {
+            var enUs = new CultureInfo("en-US");
+            var localizationOption = new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture(enUs),
+                SupportedCultures = new List<CultureInfo>{enUs},
+                SupportedUICultures = new List<CultureInfo>{enUs}
+            };
+
+            app.UseRequestLocalization(localizationOption);
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

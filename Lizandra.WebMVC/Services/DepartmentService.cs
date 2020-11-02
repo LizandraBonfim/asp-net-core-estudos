@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Lizandra.WebMVC.Data;
 using Lizandra.WebMVC.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lizandra.WebMVC.Services
 {
@@ -14,9 +16,9 @@ namespace Lizandra.WebMVC.Services
             _context = context;
         }
 
-        public List<Department> FindAll()
+        public async Task<List<Department>> FindAllAsync()
         {
-            return _context.Department.OrderBy(e => e.Name).ToList();
+            return await _context.Department.OrderBy(e => e.Name).ToListAsync();
         }
 
         public void Insert(Seller obj)
