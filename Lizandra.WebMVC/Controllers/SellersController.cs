@@ -11,7 +11,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
 
-
 namespace Lizandra.WebMVC.Controllers
 {
     public class SellersController : Controller
@@ -75,8 +74,15 @@ namespace Lizandra.WebMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            await _sellerService.RemoveAsync(id);
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await _sellerService.RemoveAsync(id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (IntegrityException e)
+            {
+                return RedirectToAction(nameof(Error), new {message = e.Message});
+            }
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -128,7 +134,7 @@ namespace Lizandra.WebMVC.Controllers
                 viewModel.Seller = seller;
                 return View(viewModel);
             }
-            
+
             if (id != seller.Id)
             {
                 return RedirectToAction(nameof(Error), new {message = "Id mismatch"});
