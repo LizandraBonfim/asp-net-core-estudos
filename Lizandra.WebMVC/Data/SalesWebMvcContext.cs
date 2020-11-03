@@ -2,6 +2,7 @@ using System.Linq;
 using Lizandra.WebMVC.Models;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace Lizandra.WebMVC.Data
 {
     public class SalesWebMvcContext : DbContext
@@ -9,6 +10,7 @@ namespace Lizandra.WebMVC.Data
         public SalesWebMvcContext (DbContextOptions<SalesWebMvcContext> options)
             : base(options)
         {
+            
         }
 
         public DbSet<Department> Department { get; set; }
@@ -22,7 +24,7 @@ namespace Lizandra.WebMVC.Data
                 .SelectMany(t => t.GetProperties())
                 .Where(p => p.ClrType == typeof(decimal) || p.ClrType == typeof(decimal?)))
             {
-                property.SetColumnType("decimal(8, 2)");
+                //property.SetColumnType("decimal(8, 2)");
             }
         }
     }
